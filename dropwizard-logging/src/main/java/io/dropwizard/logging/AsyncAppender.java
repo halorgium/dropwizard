@@ -3,6 +3,7 @@ package io.dropwizard.logging;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.AppenderBase;
+import ch.qos.logback.core.spi.FilterReply;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import io.dropwizard.util.Duration;
@@ -109,5 +110,10 @@ public class AsyncAppender extends AppenderBase<ILoggingEvent> {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    @Override
+    public FilterReply getFilterChainDecision(ILoggingEvent event) {
+        return delegate.getFilterChainDecision(event);
     }
 }
